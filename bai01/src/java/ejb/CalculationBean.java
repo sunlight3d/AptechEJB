@@ -5,6 +5,7 @@
  */
 package ejb;
 import javax.ejb.*;
+
 @Stateless
 public class CalculationBean {
     private Integer number1;
