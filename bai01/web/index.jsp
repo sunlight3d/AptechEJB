@@ -8,9 +8,9 @@
     public void jspInit() {
         try {
             InitialContext initialContext = new InitialContext();
-            listBooksRemote = (ListBooksRemote)initialContext.lookup("EJBStateful/ListBooks");
+            listBooksRemote = (ListBooksRemote)initialContext.lookup("java:global/EJBStateful/ListBooks");
         } catch(Exception e) {
-            
+            System.out.println("error = ");
         }
     }
 %>
@@ -20,6 +20,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
+        <form method="post">
+            <input type="text" name="bookName"/>
+            <input type="submit" value="addBook" name="addBook"/>
+            <input type="submit" value="removeBook" name="removeBook"/>
+        </form>
     </body>
 </html>
