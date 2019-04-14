@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.servlets;
+package servlets;
 
 import ejb.CalculationBean;
 import java.io.IOException;

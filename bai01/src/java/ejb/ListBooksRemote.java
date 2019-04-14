@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package ejb;
+
 import java.util.*;
 //stateful
 public interface ListBooksRemote {
@@ -11,3 +12,4 @@ public interface ListBooksRemote {
     void removeBook(String bookName);
     List<String> getBooks();
 }
+
