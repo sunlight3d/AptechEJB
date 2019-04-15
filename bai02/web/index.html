@@ -1,11 +1,6 @@
 <!DOCTYPE html>
-<!--
-To create JMS Connection Factories
-
-asadmin> create-jms-resource --restype javax.jms.ConnectionFactory --description "connection factory for XXX" jms/ConnectionFactory
-
-To Create JMS Destination Resources
-
+<!-- 
+asadmin> create-jms-resource --restype javax.jms.QueueConnectionFactory --description "Queue connection factory" jms/ConnectionFactory
 asadmin> create-jms-resource --restype javax.jms.Queue --property Name=PhysicalDestination jms/MyQueue
 -->
 <html>
