@@ -29,3 +29,6 @@ hs_err_pid*
 /bai01/build/
 /bai02/nbproject/private/
 /bai02/build/
+/bai03/nbproject/private/
+/bai03/bai03-war/nbproject/private/
+/bai03/bai03-ejb/nbproject/private/
