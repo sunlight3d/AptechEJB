@@ -53,6 +53,7 @@ public class Sender extends HttpServlet {
             out.println("<!DOCTYPE html>");
             String message = request.getParameter("message");
             textMessage.setText(message);
+            queueSender.send(textMessage);
         } catch(Exception e) {
             e.printStackTrace();
         }               
