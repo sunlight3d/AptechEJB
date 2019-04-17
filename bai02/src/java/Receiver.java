@@ -15,13 +15,13 @@ public class Receiver {
     private Queue queue;
     private QueueReceiver queueReceiver;
     private TextMessage textMessage; 
-    private void prepareReceiver() {
+    public void connectAndReceiveMessages() {
         try {
             initialContext = new InitialContext();
             queueConnectionFactory=(QueueConnectionFactory)initialContext.lookup("myQueueConnectionFactory"); 
             queueConnection = queueConnectionFactory.createQueueConnection();
             queueSession = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
-            queue=(Queue)initialContext.lookup("myQueue");  
+            queue=(Queue)initialContext.lookup("jms/MyQueue");  
             queueReceiver = queueSession.createReceiver(queue); 
             textMessage = queueSession.createTextMessage();  
             MyListener listener=new MyListener();  
@@ -36,6 +36,7 @@ public class Receiver {
         }
     }
     public static void main(String[] args) {
-        
+        Receiver receiver = new Receiver();
+        receiver.connectAndReceiveMessages();
     }
 }

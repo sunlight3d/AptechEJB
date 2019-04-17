@@ -36,7 +36,7 @@ public class Sender extends HttpServlet {
             queueConnectionFactory=(QueueConnectionFactory)initialContext.lookup("myQueueConnectionFactory"); 
             queueConnection = queueConnectionFactory.createQueueConnection();
             queueSession = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
-            queue=(Queue)initialContext.lookup("myQueue");  
+            queue=(Queue)initialContext.lookup("jms/MyQueue");  
             queueSender = queueSession.createSender(queue); 
             textMessage = queueSession.createTextMessage();  
         } catch(Exception e) {
@@ -49,10 +49,11 @@ public class Sender extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            PrintWriter out = response.getWriter();
-            out.println("<!DOCTYPE html>");
-            String message = request.getParameter("message");
+            PrintWriter out = response.getWriter();            
+            initTextMessage();
+            String message = request.getParameter("message");            
             textMessage.setText(message);
+            out.println("<h2>Send message: "+textMessage.toString()+"</h2>");
             queueSender.send(textMessage);
         } catch(Exception e) {
             e.printStackTrace();
