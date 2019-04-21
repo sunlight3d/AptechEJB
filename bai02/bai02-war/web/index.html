@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+create table tblProducts(
+id INT NOT NULL AUTO_INCREMENT primary key,
+productName varchar(200) not null,
+quantity int,
+description text);
+insert into tblProducts(productName,quantity,description)
+values("iphone 6", 5, "This is ip6");
 -->
 <html>
     <head>
