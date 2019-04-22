@@ -11,5 +11,5 @@ package test01;
  * @author Nguyen Duc Hoang
  */
 abstract class Shape {
-    public abstract Double calculateArea();
+    public abstract Double calculateArea();//ko the tinh dc
 }
