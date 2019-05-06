@@ -14,7 +14,7 @@ import java.util.regex.*;
 
 public class RegexExample1 {
     public static void main(String args[]) {
-        String patternString = "Email:[\\s]+([A-Za-z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6})";
+        String patternString = "([a-z0-9]+@[a-z0-9]+\\.[a-z]{2,6})";
         Pattern pattern = Pattern.compile(patternString,Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher("Email:   hoang123@gmail.com");
         final List<String> matches = new ArrayList<>();
@@ -23,7 +23,7 @@ public class RegexExample1 {
             //String x1 = matcher.group(1);
             // x2 = matcher.group(2);
             //String x3 = matcher.group(3);
-            matches.add(matcher.group(0));
+            matches.add(matcher.group());
             System.out.println("aa");
         }
         System.out.println("matches = "+matches);
