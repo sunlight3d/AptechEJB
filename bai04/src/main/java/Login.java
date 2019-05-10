@@ -51,8 +51,8 @@ public class Login extends Stage {
                 if(!validateName()) {
                     return;
                 } else {
+                    hide();
                     SecondStage secondStage = new SecondStage(Login.this.txtName.getText());
-                    secondStage.initUI();
                     secondStage.showAndWait();
                 }
             }

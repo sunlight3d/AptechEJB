@@ -1,10 +1,14 @@
 import javafx.beans.property.*;
 
 public class Student {
-    private SimpleIntegerProperty studentId;
-    private SimpleStringProperty studentName;
-    private SimpleStringProperty description;
-
+    private SimpleIntegerProperty studentId = new SimpleIntegerProperty();
+    private SimpleStringProperty studentName = new SimpleStringProperty();
+    private SimpleStringProperty description = new SimpleStringProperty();
+    public Student() {
+        super();
+        setStudentName("");
+        setDescription("");
+    }
     public Student(Integer studentId, String studentName, String description) {
         this.studentId = new SimpleIntegerProperty(studentId);
         this.studentName = new SimpleStringProperty(studentName);

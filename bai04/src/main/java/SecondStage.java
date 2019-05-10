@@ -1,3 +1,4 @@
+import com.sun.org.apache.bcel.internal.generic.TABLESWITCH;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Optional;
 
@@ -34,11 +36,13 @@ public class SecondStage extends Stage {
             new Student(3, "Hoang 3", "This is 3")
 
     );
+    private Button btnAdd = new Button("Add new Student");
     private Integer numberOfClicks = 0;
     private ContextMenu contextMenu = new ContextMenu();
     private MenuItem menuItemDelete = new MenuItem("Delete");
     private MenuItem menuItemProperties = new MenuItem("Properties ");
     private Student selectedStudent;
+    private DetailStudentStage detailStudentStage;
     private void setupTable() {
         columnStudentId.setMinWidth(120);
         columnStudentId.setCellValueFactory(new PropertyValueFactory<String, String>("studentId"));
@@ -50,20 +54,26 @@ public class SecondStage extends Stage {
         columnDescription.setCellValueFactory(new PropertyValueFactory<String, String>("description"));
         tableView.setItems(students);
         tableView.getColumns().addAll(columnStudentId, columnStudentName, columnDescription);
+
         tableView.setRowFactory(tv -> {
             final TableRow<Student> tableRow = new TableRow<Student>();
             tableRow.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    numberOfClicks++;
-//                    System.out.println("Mouse click: "+numberOfClicks);
-                    selectedStudent = (Student)tableRow.getItem();
-                    System.out.println("selected student"+selectedStudent.getStudentName());
-                    if(event.getClickCount() == 2) {
-                        System.out.println("Double click");
-                    } else if(event.getButton() == MouseButton.SECONDARY) {
-                        System.out.println("Right click");
-                        contextMenu.show(tableRow, event.getScreenX(), event.getScreenY());
+                    try {
+                        numberOfClicks++;
+    //                    System.out.println("Mouse click: "+numberOfClicks);
+                        selectedStudent = (Student)tableRow.getItem();
+                        System.out.println("selected student"+selectedStudent.getStudentName());
+                        if(event.getClickCount() == 2) {
+                            System.out.println("Double click");
+                            showUpdateStudent();
+                        } else if(event.getButton() == MouseButton.SECONDARY) {
+                            System.out.println("Right click");
+                            contextMenu.show(tableRow, event.getScreenX(), event.getScreenY());
+                        }
+                    } catch (NullPointerException e) {
+                        //
                     }
                 }
             });
@@ -76,6 +86,30 @@ public class SecondStage extends Stage {
                 showConfirmation();
             }
         });
+        menuItemProperties.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showUpdateStudent();
+            }
+        });
+    }
+    private void showUpdateStudent() {
+        System.out.println("You press properties");
+        detailStudentStage = new DetailStudentStage(selectedStudent);
+        detailStudentStage.setParent(SecondStage.this);
+        detailStudentStage.setType("update");
+        detailStudentStage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.out.println("ddd");
+                tableView.refresh();
+            }
+        });
+        detailStudentStage.showAndWait();
+    }
+    public void addNewStudent(Student newStudent) {
+        students.add(newStudent);
+        tableView.refresh();
     }
     private void showConfirmation() {
 
@@ -105,6 +139,7 @@ public class SecondStage extends Stage {
     SecondStage(String name){
         super();
         this.name = name;
+        this.initUI();
     }
     public void initUI() {
         this.setTitle("Second screen");
@@ -114,9 +149,19 @@ public class SecondStage extends Stage {
         vbox.setSpacing(10);
         label.setText("This is second screen:\n"+this.name);
         label.setFont(Font.font(30));
-        vbox.getChildren().addAll(label, tableView);
+        vbox.getChildren().addAll(label, tableView, btnAdd);
+        btnAdd.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                detailStudentStage = new DetailStudentStage(null);
+                detailStudentStage.setType("insert");
+                detailStudentStage.setParent(SecondStage.this);
+                detailStudentStage.show();
+            }
+        });
         scene = new Scene(vbox, 600,680);
         this.setScene(scene);
+
     }
 
 }
